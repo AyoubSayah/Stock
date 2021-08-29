@@ -1,0 +1,26 @@
+a {
+  text-decoration: none;
+  color: unset;
+}
+.MuiTypography-root {
+  font-size: 14px !important;
+  color: #637381;
+}
+
+.selected .MuiTypography-root {
+  color: #626ed4;
+}
+.selected svg {
+  fill: #626ed4;
+}
+.selected .MuiListItem-button {
+  background-color: rgb(98 110 212 / 16%);
+  border-right: 5px solid #626ed4;
+}
+.MuiListItem-button:hover {
+  background-color: rgb(98 110 212 / 16%) !important;
+  color: #626ed4;
+}
+.MuiListItem-button:hover svg {
+  fill: #626ed4;
+}

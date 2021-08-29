@@ -1,0 +1,25 @@
+.card {
+  background-color: #f2f3f5;
+  padding: 1rem;
+  display: flex;
+  margin: 1rem;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.4rem;
+}
+p {
+  font: 0.9rem;
+}
+.profile {
+  color: #697886;
+  line-height: 1.6rem;
+}
+.profile strong {
+  color: black;
+  font-weight: 500;
+}

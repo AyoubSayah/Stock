@@ -1,24 +1,68 @@
-import logo from './logo.svg';
 import './App.css';
+import Sidebar from './shared/sidebar/sidebar';
+import Navbar from './shared/navbar/navbar';
+import { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Dashbord from './view/dashboard/dashbord';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Article from './view/articles/Article';
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    marginTop: '3rem',
+    //  width: `calc(100% - 240px)`,
+    marginLeft: 240,
+    background: '#F8F8FA',
+    minHeight: '85vh',
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    padding: theme.spacing(3),
+  },
+  closed: {
+    marginTop: '3rem',
+    marginLeft: `${theme.spacing(7) + 1}px`,
+    padding: theme.spacing(3),
 
+    // width:`calc(100% - ${theme.spacing(7) + 1}px)`,
+    //   [theme.breakpoints.up('sm')]: {
+    //   width: `calc(100%- ${theme.spacing(9) + 1}px)`,
+    // },
+  },
+}));
 function App() {
+  const [drawer, setdrawer] = useState(true);
+  const [lock, setlock] = useState(true);
+  const calases = useStyles();
+
+  const openclose = (data) => {
+    if (!lock) {
+      setdrawer(data);
+    }
+    console.log(data);
+  };
+  const lockside = (data) => {
+    setlock(data);
+    setdrawer(data);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <div className='App'>
+        <Sidebar drawer={drawer} openclose={openclose} />
+        <Navbar lockside={lockside} />
+        <main
+          className={clsx(calases.toolbar, {
+            [calases.closed]: !drawer,
+          })}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Switch>
+            <Route path='/tableau-de-bord' component={Dashbord}></Route>
+            <Route path='/articles' component={Article}></Route>
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }
 

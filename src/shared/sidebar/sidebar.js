@@ -17,6 +17,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import Profilecard from '../profilecard/profilecard';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import PersonIcon from '@material-ui/icons/Person';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +111,15 @@ export default function Sidebar(props) {
                 <ListItemText primary='Articles' />
               </ListItem>
             </NavLink>
-            <NavLink to='/fournisseurs' activeClassName='selected'>
+            <NavLink to='/client' activeClassName='selected'>
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonIcon/>
+                </ListItemIcon>
+                <ListItemText primary='client' />
+              </ListItem>
+            </NavLink>
+            <NavLink to='/fournisseur' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>
                   <LocalShippingIcon />
@@ -118,6 +127,7 @@ export default function Sidebar(props) {
                 <ListItemText primary='Fournisseurs' />
               </ListItem>
             </NavLink>
+          
             <NavLink to='/commandes' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>

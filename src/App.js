@@ -7,6 +7,10 @@ import clsx from 'clsx';
 import Dashbord from './view/dashboard/dashbord';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Article from './view/articles/Article';
+import Client from './view/client/client';
+import Fournisseurs from './view/fournisseur/fournisseur';
+
+
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     marginTop: '3rem',
@@ -59,6 +63,8 @@ function App() {
           <Switch>
             <Route path='/tableau-de-bord' component={Dashbord}></Route>
             <Route path='/articles' component={Article}></Route>
+            <Route path='/client' component={Client}></Route>
+            <Route path='/fournisseur' component={Fournisseurs}></Route>
           </Switch>
         </main>
       </div>

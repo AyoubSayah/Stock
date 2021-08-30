@@ -136,7 +136,7 @@ export default function Addarticle() {
           color='primary'
           style={{ background: '#626ED4', margin: 'auto', display: 'block' }}
         >
-          <span style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ display: 'flex', alignItems: 'center',}}>
             {' '}
             <AddCircleOutlineIcon /> Ajouter
           </span>

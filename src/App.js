@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Article from './view/articles/Article';
 import Client from './view/client/client';
 import Fournisseurs from './view/fournisseur/fournisseur';
-
+import Login from './view/login/login';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -53,20 +53,27 @@ function App() {
   return (
     <Router>
       <div className='App'>
-        <Sidebar drawer={drawer} openclose={openclose} />
-        <Navbar lockside={lockside} />
-        <main
-          className={clsx(calases.toolbar, {
-            [calases.closed]: !drawer,
-          })}
-        >
-          <Switch>
-            <Route path='/tableau-de-bord' component={Dashbord}></Route>
-            <Route path='/articles' component={Article}></Route>
-            <Route path='/client' component={Client}></Route>
-            <Route path='/fournisseur' component={Fournisseurs}></Route>
-          </Switch>
-        </main>
+        <Switch>
+          <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path='/'>
+            <Sidebar drawer={drawer} openclose={openclose} />
+            <Navbar lockside={lockside} />
+            <main
+              className={clsx(calases.toolbar, {
+                [calases.closed]: !drawer,
+              })}
+            >
+              <Switch>
+                <Route path='/tableau-de-bord' component={Dashbord}></Route>
+                <Route path='/articles' component={Article}></Route>
+                <Route path='/client' component={Client}></Route>
+                <Route path='/fournisseur' component={Fournisseurs}></Route>
+              </Switch>
+            </main>
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

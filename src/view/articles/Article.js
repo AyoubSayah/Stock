@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#626ED4',
     margin: '1rem',
     cursor: 'pointer',
-     transition: 'all 0.5s' ,transform: '2s',
+    transition: 'all 0.5s',
+    transform: '2s',
     backfaceVisibility: 'hidden',
 
     '&:hover': {
-      transform: 'scale(1.04) translateZ(1)',
       transform: 'rotate(180deg)',
     },
   },
@@ -64,6 +64,7 @@ const columns = [
     headerName: 'Prix unitaire',
     width: 150,
     flex: 1,
+    type: 'number',
   },
   {
     field: 'stock',
@@ -71,6 +72,7 @@ const columns = [
     // type: 'number',
     width: 110,
     flex: 1,
+    type: 'number',
   },
   //   {
   //     field: 'fullName',

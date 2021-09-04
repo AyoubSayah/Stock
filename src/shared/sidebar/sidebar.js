@@ -18,6 +18,9 @@ import Profilecard from '../profilecard/profilecard';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import PersonIcon from '@material-ui/icons/Person';
+import ShopIcon from '@material-ui/icons/Shop';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -128,12 +131,28 @@ export default function Sidebar(props) {
               </ListItem>
             </NavLink>
           
-            <NavLink to='/commandes' activeClassName='selected'>
+            <NavLink to='/approvisionement' activeClassName='selected'>
+              <ListItem button>
+                <ListItemIcon>
+                  <ShoppingCartIcon/>
+                </ListItemIcon>
+                <ListItemText primary='Approvisionement'/>
+              </ListItem>
+            </NavLink>
+            <NavLink to='/vente' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>
                   <ListAltIcon />
                 </ListItemIcon>
-                <ListItemText primary='Commandes' />
+                <ListItemText primary='Vente'/>
+              </ListItem>
+            </NavLink>
+            <NavLink to='/financement' activeClassName='selected'>
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountBalanceWalletIcon/>
+                </ListItemIcon>
+                <ListItemText primary='Financement'/>
               </ListItem>
             </NavLink>
 

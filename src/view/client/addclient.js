@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { TableRow } from '@material-ui/core';
 
 const usestyles = makeStyles((theme)=>
 ({
@@ -18,9 +19,15 @@ const usestyles = makeStyles((theme)=>
         color:'#626ED4',
         textAlign:'center',
     },
+    flex: {
+      margin:'3rem',
+      marginLeft:'4rem'
+      
+      }, 
     input :{
         margin:'1rem',
         width:'25rem',
+       
         
         
     '& :invalid:focus:not(:placeholder-shown) + fieldset': {
@@ -60,6 +67,7 @@ function getModalStyle() {
       brderRadius: '1rem',
       padding: '2rem 4rem',
       width:'1000px'
+
     };
 }
 export default function Addclient() {
@@ -124,7 +132,7 @@ export default function Addclient() {
             color='primary'
             style={{ background: '#626ED4',width:'15rem',height:'4rem', margin: 'auto', display: 'block' }}
           >
-            <span style={{ display: 'flex', alignItems: 'center',fontSize:'2rem' }}>
+            <span style={{fontSize:'1.5rem',textAlign:'center' }}>
               {' '}
               <AddCircleOutlineIcon /> Ajouter
             </span>

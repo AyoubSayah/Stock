@@ -15,11 +15,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   flex: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
+  margin:'3rem',
+  marginLeft:'4rem'
+  
+  }, 
   input: {
     margin: '1rem',
+    width:'25rem',
 
     '& :invalid:focus:not(:placeholder-shown) + fieldset': {
       borderColor: '#f44336',
@@ -56,6 +58,8 @@ function getModalStyle() {
     background: 'white',
     brderRadius: '1rem',
     padding: '2rem 4rem',
+    width:'1000px',
+    flexDirection:'row',
   };
 }
 export default function Addarticle() {
@@ -65,7 +69,7 @@ export default function Addarticle() {
   return (
     <div>
       <Paper style={modalStyle} className={clases.modal}>
-        <h2 className={clases.h1}>Ajouter Article</h2>
+        <h1 className={clases.h1}>Ajouter Article</h1>
         <div className={clases.flex}>
           <TextField
             id='outlined-basic'
@@ -134,9 +138,9 @@ export default function Addarticle() {
         <Button
           variant='contained'
           color='primary'
-          style={{ background: '#626ED4', margin: 'auto', display: 'block' }}
+          style={{ background: '#626ED4', margin: 'auto', display: 'block',width:'15rem',height:'4rem' }}
         >
-          <span style={{ display: 'flex', alignItems: 'center',}}>
+          <span style={{alignItems: 'center',fontSize:'1.5rem',textAlign:'center' }}>
             {' '}
             <AddCircleOutlineIcon /> Ajouter
           </span>

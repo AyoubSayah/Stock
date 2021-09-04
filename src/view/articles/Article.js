@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Modal from '@material-ui/core/Modal';
 import Addarticle from './Addarticle';
+import ServiceArticle from './service.article';
+
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -101,9 +103,17 @@ const rows = [
   { id: 9, prixunitaire: '55', nomarticle: 'Harvey', stock: 65 },
 ];
 
-export default function Article() {
+export default function Article({article}) {
   const clases = useStyles();
+ const listArticle=[]
 
+ console.log("the list of articls is",article)
+ /*  listArticle= ServiceArticle(state =>state.article)
+console.log(listArticle) */
+/* const getArticle = ({article})=>{
+listArticle=article
+console.log("the list of articls is",article)
+} */
   const [open, setopen] = React.useState(false);
   const handleOpen = () => {
     setopen(true);
@@ -154,6 +164,7 @@ export default function Article() {
       >
         <Addarticle />
       </Modal>
+      <ServiceArticle/>
     </div>
   );
 }

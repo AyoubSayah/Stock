@@ -17,6 +17,11 @@ const usestyles = makeStyles((theme) => ({
     color: '#626ED4',
     textAlign: 'center',
   },
+  flex: {
+    margin:'3rem',
+    marginLeft:'4rem'
+    
+    }, 
   input: {
     margin: '1rem',
     width: '25rem',
@@ -115,23 +120,15 @@ export default function Addfournisseur() {
           />
         </div>
         <Button
-          variant='contained'
-          color='primary'
-          style={{
-            background: '#626ED4',
-            width: '15rem',
-            height: '4rem',
-            margin: 'auto',
-            display: 'block',
-          }}
-        >
-          <span
-            style={{ display: 'flex', alignItems: 'center', fontSize: '2rem' }}
+            variant='contained'
+            color='primary'
+            style={{ background: '#626ED4',width:'15rem',height:'4rem', margin: 'auto', display: 'block' }}
           >
-            {' '}
-            <AddCircleOutlineIcon /> Ajouter
-          </span>
-        </Button>
+            <span style={{fontSize:'1.5rem',textAlign:'center' }}>
+              {' '}
+              <AddCircleOutlineIcon /> Ajouter
+            </span>
+          </Button>
       </Paper>
     </div>
   );

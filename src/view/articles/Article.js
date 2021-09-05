@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,9 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Modal from '@material-ui/core/Modal';
 import Addarticle from './Addarticle';
-import ServiceArticle from './service.article';
-
-
+import * as apis from './service.article';
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem',
@@ -24,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
     margin: '1rem',
     cursor: 'pointer',
     transition: 'all 0.5s',
-    transform: '2s',
     backfaceVisibility: 'hidden',
 
     '&:hover': {
-      transform: 'rotate(180deg)',
+      transform: 'scale(1.04) translateZ(0)',
     },
   },
   root: {
@@ -56,64 +53,71 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
   { field: 'id', headerName: 'Code Article', flex: 1 },
   {
-    field: 'nomarticle',
+    field: 'libelle',
     headerName: 'Nom Article',
     width: 150,
     flex: 1,
   },
   {
-    field: 'prixunitaire',
-    headerName: 'Prix unitaire',
+    field: 'prixHT',
+    headerName: 'Prix HT',
+    type: 'number',
+
     width: 150,
     flex: 1,
-    type: 'number',
   },
   {
-    field: 'stock',
-    headerName: 'Stock',
-    // type: 'number',
+    field: 'qte',
+    headerName: 'Quantité',
+    type: 'number',
     width: 110,
     flex: 1,
-    type: 'number',
   },
-  //   {
-  //     field: 'fullName',
-  //     headerName: 'Full name',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 180,
-  //     flex: 1,
+  {
+    field: 'TVA',
+    headerName: 'TVA',
+    type: 'number',
+    width: 110,
+    flex: 1,
+  },
+  {
+    field: 'prix unitaire',
+    headerName: 'Prix Unitaire',
+    type: 'number',
 
-  //     valueGetter: (params) =>
-  //       `${params.getValue(params.id, 'firstName') || ''} ${
-  //         params.getValue(params.id, 'prixunitaire') || ''
-  //       }`,
-  //   },
+    width: 180,
+    flex: 1,
+
+    valueGetter: (params) =>
+      `${
+        parseFloat(params.getValue(params.id, 'prixHT')) +
+        (parseFloat(params.getValue(params.id, 'TVA')) / 100) *
+          parseFloat(params.getValue(params.id, 'prixHT'))
+      }`,
+  },
 ];
 
-const rows = [
-  { id: 1, prixunitaire: '1', nomarticle: 'Jon', stock: 35 },
-  { id: 2, prixunitaire: '5', nomarticle: 'Cersei', stock: 42 },
-  { id: 3, prixunitaire: '7', nomarticle: 'Jaime', stock: 45 },
-  { id: 4, prixunitaire: '8', nomarticle: 'Arya', stock: 16 },
-  { id: 5, prixunitaire: '623', nomarticle: 'Daenerys', stock: null },
-  { id: 6, prixunitaire: '3', nomarticle: 'aaaaaa', stock: 150 },
-  { id: 7, prixunitaire: '4', nomarticle: 'Ferrara', stock: 44 },
-  { id: 8, prixunitaire: '5', nomarticle: 'Rossini', stock: 36 },
-  { id: 9, prixunitaire: '55', nomarticle: 'Harvey', stock: 65 },
-];
+// const rows = [
+//   { id: 1, prixht: '1', libelle: 'Jon', qte: 35, TVA: 15 },
+//   { id: 2, prixht: '5', libelle: 'Cersei', qte: 42, TVA: 15 },
+//   { id: 3, prixht: '7', libelle: 'Jaime', qte: 45, TVA: 15 },
+//   { id: 4, prixht: '8', libelle: 'Arya', qte: 16, TVA: 15 },
+//   { id: 5, prixht: '623', libelle: 'Daenerys', qte: null, TVA: 15 },
+//   { id: 6, prixht: '3', libelle: 'aaaaaa', qte: 150, TVA: 15 },
+//   { id: 7, prixht: '4', libelle: 'Ferrara', qte: 44, TVA: 15 },
+//   { id: 8, prixht: '5', libelle: 'Rossini', qte: 36, TVA: 15 },
+//   { id: 9, prixht: '55', libelle: 'Harvey', qte: 65, TVA: 15 },
+// ];
 
-export default function Article({article}) {
+export default function Article() {
+  const [rows, setrow] = React.useState([]);
+  const apis2 = apis;
   const clases = useStyles();
- const listArticle=[]
-
- console.log("the list of articls is",article)
- /*  listArticle= ServiceArticle(state =>state.article)
-console.log(listArticle) */
-/* const getArticle = ({article})=>{
-listArticle=article
-console.log("the list of articls is",article)
-} */
+  useEffect(() => {
+    apis2.getallarticle().then((res) => {
+      setrow(res);
+    });
+  }, []);
   const [open, setopen] = React.useState(false);
   const handleOpen = () => {
     setopen(true);
@@ -164,7 +168,6 @@ console.log("the list of articls is",article)
       >
         <Addarticle />
       </Modal>
-      <ServiceArticle/>
     </div>
   );
 }

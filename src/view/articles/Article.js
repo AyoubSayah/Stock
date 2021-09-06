@@ -10,6 +10,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Modal from '@material-ui/core/Modal';
 import Addarticle from './Addarticle';
 import * as apis from './service.article';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem',
@@ -110,20 +112,37 @@ const columns = [
 // ];
 
 export default function Article() {
+  const [alert, setalert] = React.useState(false);
+
   const [rows, setrow] = React.useState([]);
   const apis2 = apis;
   const clases = useStyles();
   useEffect(() => {
+    fetch();
+  }, []);
+  const fetch = () => {
     apis2.getallarticle().then((res) => {
       setrow(res);
     });
-  }, []);
+  };
+  const handlealert = () => {
+    console.log('aaaaaaaaaaaaaaaaaaaa');
+    setalert(true);
+    fetch();
+  };
   const [open, setopen] = React.useState(false);
   const handleOpen = () => {
     setopen(true);
   };
   const handleClose = () => {
     setopen(false);
+  };
+  const handleClose2 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setalert(false);
   };
   return (
     <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
@@ -166,8 +185,18 @@ export default function Article() {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Addarticle />
+        <Addarticle handlealert={handlealert} handleclose={handleClose} />
       </Modal>
+      <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert
+          elevation={6}
+          variant='filled'
+          onClose={handleClose2}
+          severity='success'
+        >
+          Artice ajouteé avec succés
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

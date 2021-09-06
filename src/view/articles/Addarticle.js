@@ -10,6 +10,7 @@ import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import * as apis from './service.article';
+
 const useStyles = makeStyles((theme) => ({
   h1: {
     color: '#626ED4',
@@ -62,7 +63,7 @@ function getModalStyle() {
     flexDirection: 'row',
   };
 }
-export default function Addarticle() {
+export default function Addarticle(props) {
   const clases = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [Article, setArticle] = useState({
@@ -79,7 +80,9 @@ export default function Addarticle() {
   };
   const handlesubmit = () => {
     apis.addarticle(Article).then((res) => {
-      console.log(res);
+      console.log('aaa');
+      props.handlealert();
+      props.handleclose();
     });
   };
   return (

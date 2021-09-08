@@ -74,10 +74,12 @@ export default function Article() {
   const [alert, setalert] = React.useState(false);
 const [id,setid]=React.useState("")
   const [rows, setrow] = React.useState([]);
+  
   const apis2 = apis;
   const clases = useStyles();
   useEffect(() => {
     fetch();
+   
   }, []);
   const fetch = () => {
     apis2.getallarticle().then((res) => {
@@ -85,6 +87,12 @@ const [id,setid]=React.useState("")
       console.log(res)
     });
   };
+ 
+   const deleteArticle=(id)=>{
+ apis2.deletearticle(id).then((res)=>{
+  console.log(res)
+}) 
+  } 
   
   const handlealert = () => {
     console.log('aaaaaaaaaaaaaaaaaaaa');
@@ -113,7 +121,7 @@ const [id,setid]=React.useState("")
     setalert(false);
   };
   const columns = [
-    { field: 'mid',
+    { field: 'id',
      headerName: 'Code Article', 
      flex: 1 ,
            valueGetter: (params) => params.id  },
@@ -179,13 +187,14 @@ const [id,setid]=React.useState("")
             color="primary"
             size="small"
             style={{ marginLeft: 16 }}
-            onClick={()=>{handleOpen2(params.getValue(params.id,'_id'))}}
+           onClick={()=>{deleteArticle(params.getValue(params.id,'_id'))}}
          />
               <UpdateIcon
             variant="contained"
             color="primary"
             size="small"
             style={{ marginLeft: 16 }}
+            onClick={()=>{handleOpen2(params.getValue(params.id,'_id'))}}
          />
           
         </strong>

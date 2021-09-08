@@ -1,26 +1,26 @@
 import API from '../api';
 
-export async function getallarticle() {
-  const res = await API.get(`getallarticle`);
+ export async function getallfournisseur() {
+  const res = await API.get(`getallfournisseur`);
   if (res.data.status == 'succes') {
     return res.data.data;
   } else return [];
-}
+} 
 
-export async function addarticle(Article) {
+export async function addfournisseur(fournisseur) {
   console.log('aa');
 
-  console.log(Article);
-  const res = await API.post(`addarticle`, Article);
+  
+  const res = await API.post(`addfournisseur`, fournisseur);
   console.log(res);
   if (res.data.status == 'succes') {
     return res.data.data;
   } else return [];
 }
- export async function getArticleById(id)
- {
+/* export async function getArticleById(id)
+  {
    const res = await API.get(`getarticlebyid/${id}`)
    if (res.data.status == 'succes') {
     return res.data.data;
   } else return [];
-}
+} */

@@ -12,6 +12,9 @@ import Addarticle from './Addarticle';
 import * as apis from './service.article';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
+import UpdateArticle from './update';
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem',
@@ -52,52 +55,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 4,
   },
 }));
-const columns = [
-  { field: 'id', headerName: 'Code Article', flex: 1 },
-  {
-    field: 'libelle',
-    headerName: 'Nom Article',
-    width: 150,
-    flex: 1,
-  },
-  {
-    field: 'prixHT',
-    headerName: 'Prix HT',
-    type: 'number',
-
-    width: 150,
-    flex: 1,
-  },
-  {
-    field: 'qte',
-    headerName: 'Quantité',
-    type: 'number',
-    width: 110,
-    flex: 1,
-  },
-  {
-    field: 'TVA',
-    headerName: 'TVA',
-    type: 'number',
-    width: 110,
-    flex: 1,
-  },
-  {
-    field: 'prix unitaire',
-    headerName: 'Prix Unitaire',
-    type: 'number',
-
-    width: 180,
-    flex: 1,
-
-    valueGetter: (params) =>
-      `${
-        parseFloat(params.getValue(params.id, 'prixHT')) +
-        (parseFloat(params.getValue(params.id, 'TVA')) / 100) *
-          parseFloat(params.getValue(params.id, 'prixHT'))
-      }`,
-  },
-];
 
 // const rows = [
 //   { id: 1, prixht: '1', libelle: 'Jon', qte: 35, TVA: 15 },
@@ -112,8 +69,10 @@ const columns = [
 // ];
 
 export default function Article() {
-  const [alert, setalert] = React.useState(false);
 
+  
+  const [alert, setalert] = React.useState(false);
+const [id,setid]=React.useState("")
   const [rows, setrow] = React.useState([]);
   const apis2 = apis;
   const clases = useStyles();
@@ -123,8 +82,10 @@ export default function Article() {
   const fetch = () => {
     apis2.getallarticle().then((res) => {
       setrow(res);
+      console.log(res)
     });
   };
+  
   const handlealert = () => {
     console.log('aaaaaaaaaaaaaaaaaaaa');
     setalert(true);
@@ -134,8 +95,15 @@ export default function Article() {
   const handleOpen = () => {
     setopen(true);
   };
+  const [open2, setopen2] = React.useState(false);
+  const handleOpen2 = (id) => {
+    setid(id)
+    setopen2(true);
+    console.log(id);
+  };
   const handleClose = () => {
     setopen(false);
+    setopen2(false)
   };
   const handleClose2 = (event, reason) => {
     if (reason === 'clickaway') {
@@ -144,6 +112,88 @@ export default function Article() {
 
     setalert(false);
   };
+  const columns = [
+    { field: 'mid',
+     headerName: 'Code Article', 
+     flex: 1 ,
+           valueGetter: (params) => params.id  },
+    /* { field: '_id',
+     headerName: 'Code Article', 
+    flex: 1 , 
+     hide:true 
+    }, */
+
+    {
+      field: 'libelle',
+      headerName: 'Nom Article',
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: 'prixHT',
+      headerName: 'Prix HT',
+      type: 'number',
+  
+      width: 150,
+      flex: 1,
+    },
+    {
+      field: 'qte',
+      headerName: 'Quantité',
+      type: 'number',
+      width: 110,
+      flex: 1,
+    },
+    {
+      field: 'TVA',
+      headerName: 'TVA',
+      type: 'number',
+      width: 110,
+      flex: 1,
+    },
+    {
+      field: 'prix unitaire',
+      headerName: 'Prix Unitaire',
+      type: 'number',
+  
+      width: 180,
+      flex: 1,  
+  
+      valueGetter: (params) =>
+        `${
+          parseFloat(params.getValue(params.id, 'prixHT')) +
+          (parseFloat(params.getValue(params.id, 'TVA')) / 100) *
+            parseFloat(params.getValue(params.id, 'prixHT'))
+        }`,
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 110,
+      flex: 1,
+    
+      renderCell: (params) => (
+        <strong>
+          <DeleteIcon
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16 }}
+            onClick={()=>{handleOpen2(params.getValue(params.id,'_id'))}}
+         />
+              <UpdateIcon
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16 }}
+         />
+          
+        </strong>
+      ),
+    },
+    
+  ];
+  
   return (
     <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
       {' '}
@@ -186,6 +236,16 @@ export default function Article() {
         aria-describedby='simple-modal-description'
       >
         <Addarticle handlealert={handlealert} handleclose={handleClose} />
+        
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <UpdateArticle handlealert={handlealert} handleclose={handleClose} id={id} />
+        
       </Modal>
       <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert

@@ -11,7 +11,9 @@ import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import * as apis from './service.fournisseur';
 
+import  { useState } from 'react';
 const usestyles = makeStyles((theme) => ({
   h1: {
     color: '#626ED4',
@@ -64,20 +66,66 @@ function getModalStyle() {
     width: '1000px',
   };
 }
-export default function Addfournisseur() {
+export default function Addfournisseur(props) {
   const clases = usestyles();
   const [modalStyle] = React.useState(getModalStyle);
+  const [fournisseur, setfournisseur] = useState({
+    // code_fournisseur: 0,
+    N_CNSS: 0,
+    nom: '',
+    adresse: '',
+    raison_social: '',
+    email: '',
+    iden_fiscal:0,
+    telephone:0,
+    ref_commerciale:0,
+    site:''
+  });
+  const handleChange = (e, type) => {
+    setfournisseur((prev) => ({ ...prev, [type]: e.target.value }));
+    console.log(fournisseur);
+  };
+  const handlesubmit = () => {
+    apis.addfournisseur(fournisseur).then((res) => {
+      console.log('aaa');
+      props.handlealert();
+      props.handleclose(); 
+    });
+  };
   return (
     <div>
       <Paper style={modalStyle} className={clases.modal}>
         <h1 className={clases.h1}>Ajouter Fournisseur</h1>
         <div className={clases.flex}>
-          <TextField
+        {  <TextField
             id='outlined-basic'
-            label='Non Fournisseur'
+            label='Code Fournisseur'
             variant='outlined'
             className={clases.input}
+            type='number'
             required
+            onChange={(e) => {
+              handleChange(e, 'code_fournisseur');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          /> }
+             <TextField
+            id='outlined-basic'
+            label='N °CNSS'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'N_CNSS');
+            }}
             size='small'
             InputProps={{
               startAdornment: (
@@ -87,12 +135,127 @@ export default function Addfournisseur() {
               ),
             }}
           />
-          <TextField
+             <TextField
             id='outlined-basic'
-            label='Télephone'
+            label='Non Fournisseur'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'nom');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+          
+             <TextField
+            id='outlined-basic'
+            label='Adresse'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'adresse');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+             <TextField
+            id='outlined-basic'
+            label='Raison sociale/Non Responsable'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'raison_social');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+             <TextField
+            id='outlined-basic'
+            label='Email'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'email');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+            <TextField
+            id='outlined-basic'
+            label='Identificateur Fiscal'
             variant='outlined'
             className={clases.input}
             type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'iden_fiscal');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+            <TextField
+            id='outlined-basic'
+            label='Téléphone'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'telephone');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+           
+          <TextField
+            id='outlined-basic'
+            label='Référence commerciale'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            onChange={(e) => {
+              handleChange(e, 'ref_commerciale');
+            }}
             size='small'
             InputProps={{
               startAdornment: (
@@ -105,9 +268,12 @@ export default function Addfournisseur() {
           />
           <TextField
             id='outlined-basic'
-            label='Adresse'
+            label='Site'
             variant='outlined'
             className={clases.input}
+            onChange={(e) => {
+              handleChange(e, 'site');
+            }}
             size='small'
             InputProps={{
               startAdornment: (
@@ -122,7 +288,10 @@ export default function Addfournisseur() {
         <Button
             variant='contained'
             color='primary'
+           
             style={{ background: '#626ED4',width:'15rem',height:'4rem', margin: 'auto', display: 'block' }}
+
+            onClick={handlesubmit}
           >
             <span style={{fontSize:'1.5rem',textAlign:'center' }}>
               {' '}

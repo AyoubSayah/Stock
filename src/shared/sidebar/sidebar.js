@@ -117,7 +117,7 @@ export default function Sidebar(props) {
             <NavLink to='/client' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>
-                  <PersonIcon/>
+                  <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary='client' />
               </ListItem>
@@ -130,13 +130,13 @@ export default function Sidebar(props) {
                 <ListItemText primary='Fournisseurs' />
               </ListItem>
             </NavLink>
-          
-            <NavLink to='/approvisionement' activeClassName='selected'>
+
+            <NavLink to='/approvisiemnt' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>
-                  <ShoppingCartIcon/>
+                  <ShoppingCartIcon />
                 </ListItemIcon>
-                <ListItemText primary='Approvisionement'/>
+                <ListItemText primary='Approvisionement' />
               </ListItem>
             </NavLink>
             <NavLink to='/vente' activeClassName='selected'>
@@ -144,15 +144,15 @@ export default function Sidebar(props) {
                 <ListItemIcon>
                   <ListAltIcon />
                 </ListItemIcon>
-                <ListItemText primary='Vente'/>
+                <ListItemText primary='Vente' />
               </ListItem>
             </NavLink>
             <NavLink to='/financement' activeClassName='selected'>
               <ListItem button>
                 <ListItemIcon>
-                  <AccountBalanceWalletIcon/>
+                  <AccountBalanceWalletIcon />
                 </ListItemIcon>
-                <ListItemText primary='Financement'/>
+                <ListItemText primary='Financement' />
               </ListItem>
             </NavLink>
 

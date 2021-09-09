@@ -10,6 +10,7 @@ import Article from './view/articles/Article';
 import Client from './view/client/client';
 import Fournisseurs from './view/fournisseur/fournisseur';
 import Login from './view/login/login';
+import Approvisiemnt from './view/approvisiement/approvisiemnt';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -70,6 +71,7 @@ function App() {
                 <Route path='/articles' component={Article}></Route>
                 <Route path='/client' component={Client}></Route>
                 <Route path='/fournisseur' component={Fournisseurs}></Route>
+                <Route path='/approvisiemnt' component={Approvisiemnt}></Route>
               </Switch>
             </main>
           </Route>

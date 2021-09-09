@@ -14,11 +14,13 @@ import MuiAlert from '@material-ui/lab/Alert';
 import * as apis from './service.fournisseur';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem',
     flexGrow: '1',
+    minHeight: '40vh',
   },
   icon: {
     width: '3.5rem',
@@ -77,6 +79,8 @@ export default function Fournisseurs() {
   const [open, setopen] = React.useState(false);
   const [rows, setrow] = React.useState([]);
   const [alert, setalert] = React.useState(false);
+  const [isloaded, setisloaded] = React.useState(false);
+
   const [id, setid] = React.useState('');
   useEffect(() => {
     fetch();
@@ -101,7 +105,7 @@ export default function Fournisseurs() {
   const fetch = () => {
     apis.getallfournisseur().then((res) => {
       setrow(res);
-      console.log('', res.email);
+      setisloaded(true);
     });
   };
   console.log(rows);
@@ -121,65 +125,55 @@ export default function Fournisseurs() {
     {
       field: 'nom',
       headerName: 'Nom Fournisseur',
-      width: 150,
       flex: 1,
     },
     {
       field: 'raison_social',
       headerName: 'Raison social/Nom Responsable',
-      width: 150,
       flex: 1,
     },
     {
       field: 'iden_fiscal',
       headerName: 'Identificateur Fiscale',
-      width: 150,
       type: 'number',
       flex: 1,
     },
     {
       field: 'ref_commerciale',
       headerName: 'Référence Commerciale',
-      width: 150,
       type: 'number',
       flex: 1,
     },
     {
       field: ' N_CNSS',
       headerName: 'N° CNSS',
-      width: 150,
       type: 'number',
       flex: 1,
     },
     {
       field: 'adresse',
       headerName: 'Adresse',
-      width: 150,
       flex: 1,
     },
     {
       field: 'email',
       headerName: 'Email',
-      width: 150,
       flex: 1,
     },
     {
       field: 'telephone',
       headerName: 'Téléphone',
-      width: 150,
       type: 'number',
       flex: 1,
     },
     {
       field: 'site',
       headerName: 'Site',
-      width: 150,
       flex: 1,
     },
     {
       field: 'action',
       headerName: 'Action',
-      width: 110,
       flex: 1,
 
       renderCell: (params) => (
@@ -231,13 +225,30 @@ export default function Fournisseurs() {
         </Paper>
       </div>
       <Card className={clases.card}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
-          autoHeight
-        />{' '}
+        {isloaded && (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={8}
+            rowsPerPageOptions={[8]}
+            autoHeight
+            autoPageSize
+            disableColumnMenu='true'
+          />
+        )}
+        {!isloaded && (
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '15rem',
+            }}
+          >
+            <CircularProgress color='primary' />
+          </div>
+        )}
       </Card>
       <Modal
         open={open}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +10,11 @@ import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import * as apis from './service.article';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import * as apisf from '../fournisseur/service.fournisseur';
 
 const useStyles = makeStyles((theme) => ({
   h1: {
@@ -46,6 +51,15 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: '#697886',
   },
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    width: '250px',
+  },
 }));
 function getModalStyle() {
   const top = 50;
@@ -66,15 +80,36 @@ function getModalStyle() {
 export default function Addarticle(props) {
   const clases = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
+  const [list_fournisseur, setfournisseur] = React.useState([]);
+  const [nomfor, setnom] = React.useState([]);
+
   const [Article, setArticle] = useState({
+    id: 0,
     libelle: '',
     prixHT: '',
     TVA: '',
     remise: 0,
     qte: 0,
     ref_article: '',
+    id_fournisseur: '',
+    nom: '',
   });
+  useEffect(() => {
+    fetchFournisseur();
+  }, []);
+
+  const nomFournisser = () => {
+    list_fournisseur.map((res) => {
+      res.map((nom) => {
+        setnom(nom);
+        console.log(res.Object.value);
+      });
+    });
+  };
   const handleChange = (e, type) => {
+    console.log(e.target.value);
+    console.log(type);
+
     setArticle((prev) => ({ ...prev, [type]: e.target.value }));
     console.log(Article);
   };
@@ -85,11 +120,65 @@ export default function Addarticle(props) {
       props.handleclose();
     });
   };
+  const fetchFournisseur = () => {
+    apisf.getallfournisseur().then((res) => {
+      setfournisseur(res);
+      console.log('liste of four', res);
+    });
+    console.log(list_fournisseur.nom);
+  };
   return (
     <div>
       <Paper style={modalStyle} className={clases.modal}>
         <h1 className={clases.h1}>Ajouter Article</h1>
         <div className={clases.flex}>
+          <FormControl className={clases.input} variant='outlined'>
+            <InputLabel id='demo-simple-select-outlined-label'>
+              Fournisseur
+            </InputLabel>
+
+            <Select
+              labelId='demo-simple-select-outlined-label'
+              id='demo-simple-select-outlined'
+              value={Article.id_fournisseur}
+              onChange={(e) => {
+                handleChange(e, 'id_fournisseur');
+              }}
+              label='Fournisseur'
+            >
+              {list_fournisseur.map((fourni) => {
+                return (
+                  <MenuItem
+                    // onClick={() => {
+                    //   handlefournissuer(fourni._id);
+                    // }}
+                    value={fourni._id}
+                  >
+                    {fourni.nom}{' '}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          <TextField
+            id='outlined-basic'
+            type='number'
+            label='Code Article'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'id');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
           <TextField
             id='outlined-basic'
             label='Libelle'

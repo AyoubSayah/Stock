@@ -15,10 +15,13 @@ import MuiAlert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import UpdateArticle from './update';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: '2rem',
     flexGrow: '1',
+    minHeight: '40vh',
   },
   icon: {
     width: '3.5rem',
@@ -54,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 // const rows = [
@@ -72,14 +79,23 @@ export default function Article() {
   const [alert, setalert] = React.useState(false);
   const [id, setid] = React.useState('');
   const [rows, setrow] = React.useState([]);
+  const [isloaded, setisloaded] = React.useState(false);
   const apis2 = apis;
   const clases = useStyles();
   useEffect(() => {
+    console.log('useffect');
     fetch();
   }, []);
   const fetch = () => {
     apis2.getallarticle().then((res) => {
       setrow(res);
+      console.log(res);
+      setisloaded(true);
+    });
+  };
+
+  const deleteArticle = (id) => {
+    apis2.deletearticle(id).then((res) => {
       console.log(res);
     });
   };
@@ -111,12 +127,12 @@ export default function Article() {
     setalert(false);
   };
   const columns = [
-    // {
-    //   field: 'mid',
-    //   headerName: 'Code Article',
-    //   flex: 1,
-    //   valueGetter: (params) => params.id,
-    // },
+    {
+      field: 'id',
+      headerName: 'Code Article',
+      flex: 1,
+      valueGetter: (params) => params.id,
+    },
     /* { field: '_id',
      headerName: 'Code Article', 
     flex: 1 , 
@@ -151,21 +167,22 @@ export default function Article() {
       width: 110,
       flex: 1,
     },
-    // {
-    //   field: 'prix unitaire',
-    //   headerName: 'Prix Unitaire',
-    //   type: 'number',
+    {
+      field: 'prix unitaire',
+      headerName: 'Prix Unitaire',
+      type: 'number',
 
-    //   width: 180,
-    //   flex: 1,
+      width: 180,
+      flex: 1,
 
-    //   valueGetter: (params) =>
-    //     `${
-    //       parseFloat(params.getValue(params.id, 'prixHT')) +
-    //       (parseFloat(params.getValue(params.id, 'TVA')) / 100) *
-    //         parseFloat(params.getValue(params.id, 'prixHT'))
-    //     }`,
-    // },
+      valueGetter: (params) =>
+        `${
+          parseFloat(params.getValue(params.id, 'prixHT')) +
+          (parseFloat(params.getValue(params.id, 'TVA')) / 100) *
+            parseFloat(params.getValue(params.id, 'prixHT')) +
+          ' TND'
+        }`,
+    },
     {
       field: 'action',
       headerName: 'Action',
@@ -180,7 +197,7 @@ export default function Article() {
             size='small'
             style={{ marginLeft: 16 }}
             onClick={() => {
-              handleOpen2(params.getValue(params.id, '_id'));
+              deleteArticle(params.getValue(params.id, '_id'));
             }}
           />
           <UpdateIcon
@@ -188,6 +205,9 @@ export default function Article() {
             color='primary'
             size='small'
             style={{ marginLeft: 16 }}
+            onClick={() => {
+              handleOpen2(params.getValue(params.id, '_id'));
+            }}
           />
         </strong>
       ),
@@ -221,14 +241,30 @@ export default function Article() {
         </Paper>
       </div>
       <Card className={clases.card}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
-          autoHeight
-          id='_id'
-        />{' '}
+        {isloaded && (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={8}
+            rowsPerPageOptions={[8]}
+            autoHeight
+            autoPageSize
+            disableColumnMenu='true'
+          />
+        )}
+        {!isloaded && (
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '15rem',
+            }}
+          >
+            <CircularProgress color='primary' />
+          </div>
+        )}
       </Card>
       <Modal
         open={open}

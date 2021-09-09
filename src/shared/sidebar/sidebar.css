@@ -21,6 +21,9 @@ a {
   background-color: rgb(98 110 212 / 16%) !important;
   color: #626ed4;
 }
+.select .MuiListItem-button {
+  background-color: rgb(98 110 212 / 16%);
+}
 .MuiListItem-button:hover svg {
   fill: #626ed4;
 }

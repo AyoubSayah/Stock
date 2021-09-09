@@ -70,7 +70,7 @@ export default function Addfournisseur(props) {
   const clases = usestyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [fournisseur, setfournisseur] = useState({
-    // code_fournisseur: 0,
+    id: 0,
     N_CNSS: 0,
     nom: '',
     adresse: '',
@@ -105,7 +105,7 @@ export default function Addfournisseur(props) {
             type='number'
             required
             onChange={(e) => {
-              handleChange(e, 'code_fournisseur');
+              handleChange(e, 'id');
             }}
             size='small'
             InputProps={{

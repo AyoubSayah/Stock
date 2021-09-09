@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Modal from '@material-ui/core/Modal';
 import Addfournisseur from './addfournisseur';
+import Updatefournisseur from './update';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import * as apis from './service.fournisseur';
@@ -88,8 +89,10 @@ export default function Fournisseurs() {
   const handleOpen = () => {
     setopen(true);
   };
+ 
   const handleClose = () => {
     setopen(false);
+    setopen2(false);
   };
   const handlealert = () => {
     setalert(true);
@@ -106,6 +109,11 @@ export default function Fournisseurs() {
     apis.getallfournisseur().then((res) => {
       setrow(res);
       setisloaded(true);
+    });
+  };
+  const deleteFornisseur = (id) => {
+    apis.deleteFournisseur(id).then((res) => {
+      console.log(res);
     });
   };
   console.log(rows);
@@ -172,30 +180,35 @@ export default function Fournisseurs() {
       flex: 1,
     },
     {
-      field: 'action',
-      headerName: 'Action',
-      flex: 1,
-
-      renderCell: (params) => (
-        <strong>
-          <DeleteIcon
-            variant='contained'
-            color='primary'
-            size='small'
-            style={{ marginLeft: 16 }}
-            onClick={() => {
-              handleOpen2(params.getValue(params.id, '_id'));
-            }}
-          />
-          <UpdateIcon
-            variant='contained'
-            color='primary'
-            size='small'
-            style={{ marginLeft: 16 }}
-          />
-        </strong>
-      ),
-    },
+     
+        field: 'action',
+        headerName: 'Action',
+        width: 110,
+        flex: 1,
+  
+        renderCell: (params) => (
+          <strong>
+            <DeleteIcon
+              variant='contained'
+              color='primary'
+              size='small'
+              style={{ marginLeft: 16 }}
+              onClick={() => {
+                 deleteFornisseur(params.getValue(params.id, '_id'));
+              }}
+            />
+            <UpdateIcon
+              variant='contained'
+              color='primary'
+              size='small'
+              style={{ marginLeft: 16 }}
+              onClick={() => {
+                handleOpen2(params.getValue(params.id, '_id'));
+              }}
+            />
+          </strong>
+        ),
+      },
   ];
 
   return (
@@ -257,6 +270,18 @@ export default function Fournisseurs() {
         aria-describedby='simple-modal-description'
       >
         <Addfournisseur handlealert={handlealert} handleclose={handleClose} />
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <Updatefournisseur
+          handlealert={handlealert}
+          handleclose={handleClose}
+          id={id}
+        />
       </Modal>
       <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
         <MuiAlert

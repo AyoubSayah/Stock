@@ -69,6 +69,7 @@ export default function Updatearticle(props) {
   const [Article, setArticle] = useState({
     libelle: '',
     prixHT: '',
+    prixvent:'',
     TVA: '',
     remise: 0,
     qte: 0,
@@ -91,8 +92,9 @@ export default function Updatearticle(props) {
     
 
   const handlesubmit = () => {
-    apis.addarticle(Article).then((res) => {
+    apis.updatearticle(Article).then((res) => {
       console.log('aaa');
+      console.log("arrrtticle",Article)
       props.handlealert();
       props.handleclose();
     });
@@ -150,8 +152,29 @@ export default function Updatearticle(props) {
             className={clases.input}
             type='number'
             size='small'
+            defaultValue={Article.prixHT}
             onChange={(e) => {
               handleChange(e, 'prixHT');
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <MonetizationOnIcon className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+            required
+          />
+            <TextField
+            id='outlined-basic'
+            label='Prix Vente'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            size='small'
+            defaultValue={Article.prixvent}
+            onChange={(e) => {
+              handleChange(e, 'prixvente');
             }}
             InputProps={{
               startAdornment: (
@@ -167,6 +190,7 @@ export default function Updatearticle(props) {
             label='TVA'
             variant='outlined'
             className={clases.input}
+            defaultValue={Article.TVA}
             type='number'
             size='small'
             onChange={(e) => {
@@ -187,6 +211,7 @@ export default function Updatearticle(props) {
             variant='outlined'
             className={clases.input}
             type='number'
+            defaultValue={Article.remise}
             size='small'
             onChange={(e) => {
               handleChange(e, 'remise');
@@ -204,6 +229,7 @@ export default function Updatearticle(props) {
             label='quantité Initial'
             variant='outlined'
             size='small'
+            defaultValue={Article.qte}
             className={clases.input}
             type='number'
             onChange={(e) => {

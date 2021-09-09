@@ -184,6 +184,13 @@ export default function Article() {
         }`,
     },
     {
+      field: 'prixvent',
+      headerName: 'Prix Vent',
+      type: 'number',
+      width: 110,
+      flex: 1,
+    },
+    {
       field: 'action',
       headerName: 'Action',
       width: 110,
@@ -212,6 +219,7 @@ export default function Article() {
         </strong>
       ),
     },
+  
   ];
 
   return (

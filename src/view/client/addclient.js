@@ -12,6 +12,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhoneIcon from '@material-ui/icons/Phone';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { TableRow } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import * as apis from './service.client';
 
 const usestyles = makeStyles((theme)=>
 ({
@@ -74,63 +76,251 @@ export default function Addclient() {
 
     const clases = usestyles();
     const [modalStyle]=React.useState(getModalStyle);
+    const [client,setclient]=React.useState({
+      id: 0,
+      nom: '',
+      adresse: '',
+      raison_social: '',
+      nom_reponsable:'',
+      email: '',
+      telephone:0,
+      site:'',
+      douteux:false
+
+})
+    const handleChange = (e, type) => {
+      setclient((prev) => ({ ...prev, [type]: e.target.value}));
+    
+      console.log(client);
+    };
+    const handleChangecheck = (e, type) => {
+      setclient((prev) => ({ ...prev,
+        [type]: e.currentTarget.checked }));
+    
+      console.log(client);
+    };
+    const handlesubmit = () => {
+      apis.addclient(client).then((res) => {
+      /*   console.log('aaa');
+        props.handlealert();
+        props.handleclose();  */
+      });
+    };
     return(
         <div>
         <Paper style={modalStyle} className={clases.modal}>
           <h1 className={clases.h1}>Ajouter Client</h1>
           <div className={clases.flex}>
+        {  <TextField
+            id='outlined-basic'
+            label='Code Client'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'id');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          /> }
+             <TextField
+            id='outlined-basic'
+            label='Raison social'
+            variant='outlined'
+            className={clases.input}
+           
+            required
+            onChange={(e) => {
+              handleChange(e, 'raison_social');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+             <TextField
+            id='outlined-basic'
+            label='Non Client'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'nom');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+          
+             <TextField
+            id='outlined-basic'
+            label='Adresse'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'adresse');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+             <TextField
+            id='outlined-basic'
+            label='Non Responsable'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'nom_reponsable');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+             <TextField
+            id='outlined-basic'
+            label='Email'
+            variant='outlined'
+            className={clases.input}
+            required
+            onChange={(e) => {
+              handleChange(e, 'email');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+           {/*  <TextField
+            id='outlined-basic'
+            label='Identificateur Fiscal'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'iden_fiscal');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          /> */}
             <TextField
-              id='outlined-basic'
-              label='Non Client'
-              variant='outlined'
-              className={clases.input}
-              required
-              size='small'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircle className={clases.icon} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Télephone'
-              variant='outlined'
-              className={clases.input}
-              type='number'
-              size='small'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <PhoneIcon className={clases.icon} />
-                  </InputAdornment>
-                ),
-              }}
-              required
-            />
-            <TextField
-              id='outlined-basic'
-              label='Adresse'
-              variant='outlined'
-              className={clases.input}
-            
-              size='small'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <HomeIcon className={clases.icon} />
-                  </InputAdornment>
-                ),
-              }}
-              required
-            />
-          </div>
+            id='outlined-basic'
+            label='Téléphone'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            required
+            onChange={(e) => {
+              handleChange(e, 'telephone');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AccountCircle className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+          />
+           
+      {/*     <TextField
+            id='outlined-basic'
+            label='Référence commerciale'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            onChange={(e) => {
+              handleChange(e, 'ref_commerciale');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <PhoneIcon className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+            required
+          /> */}
+          <TextField
+            id='outlined-basic'
+            label='Site'
+            variant='outlined'
+            className={clases.input}
+            onChange={(e) => {
+              handleChange(e, 'site');
+            }}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <HomeIcon className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+            required
+          />
+         
+  {       <div style={{marginLeft:'1.5rem',padding:'1rem'}}>
+            <span>
+              Client Douteux
+            </span>
+          <Checkbox
+       
+        color="primary"
+        inputProps={{ 'aria-label': 'secondary checkbox' }}
+        onChange={(e) => {
+          handleChangecheck(e, 'douteux');
+        }}
+      />
+          </div> 
+          
+          }
+         
+        </div>
           <Button
             variant='contained'
             color='primary'
             style={{ background: '#626ED4',width:'15rem',height:'4rem', margin: 'auto', display: 'block' }}
+            onClick={handlesubmit}
           >
             <span style={{fontSize:'1.5rem',textAlign:'center' }}>
               {' '}

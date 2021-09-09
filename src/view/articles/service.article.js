@@ -36,8 +36,8 @@ if (res.data.status=='succes')
 
   
 }
-export async function updatearticle(id,Article) {
-  const res =await API.put(`updatearticle/${id,Article}`)
+export async function updatearticle(Article) {
+  const res =await API.put(`updatearticle` ,Article)
   if (res.data.status=='succes')
 {
   return res;

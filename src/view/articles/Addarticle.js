@@ -87,6 +87,7 @@ export default function Addarticle(props) {
     id: 0,
     libelle: '',
     prixHT: '',
+    prixvent:'',
     TVA: '',
     remise: 0,
     qte: 0,
@@ -224,6 +225,25 @@ export default function Addarticle(props) {
             size='small'
             onChange={(e) => {
               handleChange(e, 'prixHT');
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <MonetizationOnIcon className={clases.icon} />
+                </InputAdornment>
+              ),
+            }}
+            required
+          />
+           <TextField
+            id='outlined-basic'
+            label='Prix Vente'
+            variant='outlined'
+            className={clases.input}
+            type='number'
+            size='small'
+            onChange={(e) => {
+              handleChange(e, 'prixvent');
             }}
             InputProps={{
               startAdornment: (

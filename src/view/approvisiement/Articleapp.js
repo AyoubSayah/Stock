@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import * as apis from '../fournisseur/service.fournisseur';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
+import Quantite from './Quantite';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Articleapp() {
   const [rows, setrow] = React.useState([]);
   const [isloaded, setisloaded] = React.useState(false);
-
+  const [_id, setid] = useState('');
   const columns = [
     {
       field: 'id',
@@ -119,6 +120,9 @@ export default function Articleapp() {
           color='primary'
           size='small'
           style={{ marginLeft: 16 }}
+          onClick={() => {
+            handleOpen(params.getValue(params.id, '_id'));
+          }}
         />
       ),
     },
@@ -133,6 +137,16 @@ export default function Articleapp() {
       setrow(res);
       setisloaded(true);
     });
+  };
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (data) => {
+    setOpen(true);
+    setid(data);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div>
@@ -160,6 +174,14 @@ export default function Articleapp() {
           <CircularProgress color='primary' />
         </div>
       )}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <Quantite id_article={_id} id_fournisseur={id} />
+      </Modal>
     </div>
   );
 }

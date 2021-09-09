@@ -15,7 +15,6 @@ import MuiAlert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import UpdateArticle from './update';
-import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -184,13 +183,6 @@ export default function Article() {
         }`,
     },
     {
-      field: 'prixvent',
-      headerName: 'Prix Vent',
-      type: 'number',
-      width: 110,
-      flex: 1,
-    },
-    {
       field: 'action',
       headerName: 'Action',
       width: 110,
@@ -219,7 +211,6 @@ export default function Article() {
         </strong>
       ),
     },
-  
   ];
 
   return (

@@ -78,12 +78,15 @@ export default function Article() {
   const [alert, setalert] = React.useState(false);
   const [id, setid] = React.useState('');
   const [rows, setrow] = React.useState([]);
+  const [rows2, setrow2] = React.useState([]);
   const [isloaded, setisloaded] = React.useState(false);
+  const [Search, setsearch] = React.useState(false);
   const apis2 = apis;
   const clases = useStyles();
   useEffect(() => {
     console.log('useffect');
     fetch();
+    
   }, []);
   const fetch = () => {
     apis2.getallarticle().then((res) => {
@@ -98,6 +101,28 @@ export default function Article() {
       console.log(res);
     });
   };
+/*   const handlesearch = (e, type) => {
+
+    setsearch(e.target.value);
+   console.log(e.target.value)
+  }; */
+  const search =(e)=>{
+    if(e.target.value===""){
+      setrow2(rows)
+    }else{
+      const liste = rows.filter((res) => {
+        console.log(res.libelle)
+        return res.libelle===(e.target.value);
+     
+      });
+      setrow2(liste)
+      console.log(rows)
+  console.log("the liste is",liste)
+    }
+  
+
+
+  }
 
   const handlealert = () => {
     console.log('aaaaaaaaaaaaaaaaaaaa');
@@ -229,6 +254,9 @@ export default function Article() {
             className={clases.input}
             placeholder='Rechercher'
             inputProps={{ 'aria-label': 'Rechercher' }}
+            onChange={(e) => {
+              search(e, '');
+            }}
           />
           <IconButton
             type='submit'
@@ -246,9 +274,10 @@ export default function Article() {
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[8]}
-            autoHeight
+             autoHeight
             autoPageSize
-            disableColumnMenu='true'
+            disableColumnMenu='true' 
+           
           />
         )}
         {!isloaded && (

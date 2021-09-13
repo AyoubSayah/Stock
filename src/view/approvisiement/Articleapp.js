@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import Quantite from './Quantite';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import Listeartcle from './listarticle';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -49,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
+  palylist :{
+position:'absolute',
+width:'2rem'
+  }
 }));
 
 export default function Articleapp() {
@@ -144,6 +150,12 @@ export default function Articleapp() {
     setOpen(true);
     setid(data);
   };
+  const [open2, setOpen2] = useState(false);
+
+  const handleOpen2 = () => {
+    setOpen2(true);
+  
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -173,7 +185,26 @@ export default function Articleapp() {
         >
           <CircularProgress color='primary' />
         </div>
+        
       )}
+      <PlaylistAddCheckIcon  
+      style={{
+        position:'absolute',
+        color:'#fff',
+        width:'2.5rem',
+        height:'2.5rem',
+        cursor:'pointer',
+        background:'#626ed4',
+        padding:'.5rem',
+        borderRadius:'4rem',
+        bottom:"5%",
+        right:'5%' 
+
+      }}
+      onClick={() => {
+        handleOpen2();
+      }}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -181,6 +212,22 @@ export default function Articleapp() {
         aria-describedby='simple-modal-description'
       >
         <Quantite id_article={_id} id_fournisseur={id} />
+      </Modal>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <Quantite id_article={_id} id_fournisseur={id} />
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <Listeartcle/>
       </Modal>
     </div>
   );

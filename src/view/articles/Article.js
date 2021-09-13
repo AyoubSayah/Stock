@@ -270,7 +270,7 @@ export default function Article() {
       <Card className={clases.card}>
         {isloaded && (
           <DataGrid
-            rows={rows}
+            rows={rows2}
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[8]}

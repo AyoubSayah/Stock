@@ -98,8 +98,11 @@ export default function Commandes() {
       <Grid container spacing={0} className={clases.grid}>
         <Grid item xs={4} className={clases.girdrigt}>
           <Card elevation={2} className={clases.card}>
-            <p className={clases.header}>Commande d'achat</p>
+            <p className={clases.header}>Commande d'Achat</p>
             <p className={clases.date}>Date de Creation: 12/05/2021</p>
+            <p className={clases.date}>
+              Commande № <strong>356561</strong>
+            </p>
             <div className={clases.fournissuer}>
               <div className={clases.head}>fournisseur</div>
               <p className={clases.p}>Nom :Hedi mohamed</p>
@@ -171,8 +174,11 @@ export default function Commandes() {
 
         <Grid item xs={4} className={clases.girdrigt}>
           <Card elevation={2} className={clases.card} onClick={handleclick}>
-            <p className={clases.header}>Commande d'achat</p>
+            <p className={clases.header}>Commande d'Achat</p>
             <p className={clases.date}>Date de Creation: 12/05/2021</p>
+            <p className={clases.date}>
+              Commande № <strong>356561</strong>
+            </p>
             <div className={clases.fournissuer}>
               <div className={clases.head}>fournisseur</div>
               <p className={clases.p}>Nom :Hedi mohamed</p>

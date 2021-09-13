@@ -8,6 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import ReactToPrint from 'react-to-print';
 import PrintIcon from '@material-ui/icons/Print';
 import TableRow from '@material-ui/core/TableRow';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Bonreceptions from './Bonreceptions';
+import Modal from '@material-ui/core/Modal';
+import Ajoutreception from './Ajoutreception';
+
 const useStyle = makeStyles((theme) => ({
   middle: {},
   header: {
@@ -18,13 +23,12 @@ const useStyle = makeStyles((theme) => ({
   card: {
     margin: '1rem',
     transition: 'all .5s',
-    width: '600px',
-    padding: '2rem 0rem',
+    width: '850px',
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
-    overflow: 'auto',
     height: '92%',
+    display: 'flex',
   },
   date: {},
   fournissuer: {
@@ -53,8 +57,8 @@ const useStyle = makeStyles((theme) => ({
     width: '50%',
     flexDirection: 'column',
     marginLeft: 'auto',
-    marginTop: '1rem',
-    marginBottom: '2rem',
+    marginTop: '2rem',
+    marginBottom: '4rem',
   },
   flex: {
     display: 'flex',
@@ -83,11 +87,44 @@ const useStyle = makeStyles((theme) => ({
       transform: 'scale(1.03)',
     },
   },
+  reception: {
+    width: '260px',
+    height: '100%',
+    background: '#f7f7f7',
+    borderRight: '1px solid #9e9e9e',
+    overflowY: 'auto',
+  },
+  h2: {
+    textAlign: 'center',
+    fontSize: '1.5rem',
+  },
+  icon: {
+    width: '100%',
+    height: '3rem',
+    color: '#626ED4',
+    margin: '.5rem auto',
+    cursor: 'pointer',
+    transition: 'all 0.5s',
+    backfaceVisibility: 'hidden',
+  },
+  liste: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
 }));
+
 export default function Commande() {
   const clases = useStyle();
   const componentRef = React.useRef();
+  const [open, setOpen] = React.useState(false);
+  const handleclick = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className={clases.middle}>
       <ReactToPrint
@@ -95,12 +132,32 @@ export default function Commande() {
         content={() => componentRef.current}
       />
       <Card elevation={2} className={clases.card}>
+        <div className={clases.reception}>
+          <h2 className={clases.h2}>Bon de Reception</h2>
+          <AddCircleIcon className={clases.icon} onClick={handleclick} />
+          <div className={clases.liste}>
+            <Bonreceptions />
+            <Bonreceptions />
+          </div>
+        </div>
+
         <div
-          style={{ margin: '2rem', position: 'relative' }}
+          style={{
+            margin: '2rem',
+            position: 'relative',
+            flexGrow: '1',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }}
           ref={componentRef}
         >
           <p className={clases.header}>Commande d'Achat</p>
-          <p className={clases.date}>Date de Creation: 12/05/2021</p>
+          <p className={clases.date}>
+            Date de Creation:<strong>12/05/2021</strong>{' '}
+          </p>
+          <p className={clases.date}>
+            Commande № <strong>356561</strong>
+          </p>
           <div className={clases.fournissuer}>
             <div className={clases.head}>Fournisseur</div>
             <p className={clases.p}>Nom :Hedi mohamed</p>
@@ -215,6 +272,14 @@ export default function Commande() {
           </div>
         </div>
       </Card>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
+      >
+        <Ajoutreception />
+      </Modal>
     </div>
   );
 }

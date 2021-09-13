@@ -128,7 +128,6 @@ export default function Commandes() {
                   <TableCell className={clases.body}>5TND</TableCell>
                   <TableCell className={clases.body}>10%</TableCell>
                   <TableCell className={clases.body}>19%</TableCell>
-
                   <TableCell className={clases.body}>55</TableCell>
                   <TableCell className={clases.body}>5.5TND</TableCell>
                 </TableRow>
@@ -140,7 +139,6 @@ export default function Commandes() {
                   <TableCell className={clases.body}>5TND</TableCell>
                   <TableCell className={clases.body}>10%</TableCell>
                   <TableCell className={clases.body}>19%</TableCell>
-
                   <TableCell className={clases.body}>55</TableCell>
                   <TableCell className={clases.body}>5.5TND</TableCell>
                 </TableRow>
@@ -186,7 +184,6 @@ export default function Commandes() {
                 <TableRow>
                   <TableCell className={clases.body}>code_article</TableCell>
                   <TableCell className={clases.body}>libelle</TableCell>
-
                   <TableCell className={clases.body}>prixHT</TableCell>
                   <TableCell className={clases.body}>TVA</TableCell>
                   <TableCell className={clases.body}>Remise</TableCell>

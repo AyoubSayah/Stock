@@ -144,6 +144,7 @@ export default function Addarticle(props) {
               value={Article.id_fournisseur}
               onChange={(e) => {
                 handleChange(e, 'id_fournisseur');
+               
               }}
               label='Fournisseur'
             >

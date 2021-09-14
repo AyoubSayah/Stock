@@ -11,7 +11,8 @@ import Client from './view/client/client';
 import Fournisseurs from './view/fournisseur/fournisseur';
 import Login from './view/login/login';
 import Approvisiemnt from './view/approvisiement/approvisiemnt';
-
+import Vent from './view/vente/vent';
+import Vente from './view/vente/vent';
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     marginTop: '3rem',
@@ -72,6 +73,7 @@ function App() {
                 <Route path='/client' component={Client}></Route>
                 <Route path='/fournisseur' component={Fournisseurs}></Route>
                 <Route path='/approvisiemnt' component={Approvisiemnt}></Route>
+                <Route path='/vente' component={Vente}></Route>
               </Switch>
             </main>
           </Route>

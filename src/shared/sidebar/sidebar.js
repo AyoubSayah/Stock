@@ -21,6 +21,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import StoreIcon from '@material-ui/icons/Store';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -145,6 +146,14 @@ export default function Sidebar(props) {
                   <ListAltIcon />
                 </ListItemIcon>
                 <ListItemText primary='Vente' />
+              </ListItem>
+            </NavLink>
+            <NavLink to='/stock' activeClassName='selected'>
+              <ListItem button>
+              <ListItemIcon>
+                  <StoreIcon />
+                </ListItemIcon>
+                <ListItemText primary='Stock' />
               </ListItem>
             </NavLink>
             <NavLink to='/financement' activeClassName='selected'>

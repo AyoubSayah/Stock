@@ -107,22 +107,14 @@ export default function Article() {
     setsearch(e.target.value);
    console.log(e.target.value)
   }; */
-  const search =(e)=>{
-    if(e.target.value===""){
-      setrow2(rows)
-    }else{
-      const liste = rows.filter((res) => {
- 
-        return res.libellee===(e.target.value);
-       
-      });
-      setrow2(liste)
-    
-  console.log("the liste is",liste)
-    }
-  
-
-
+  const search =()=>{
+   
+       return rows.filter((res) => 
+        res.libelle.toLowerCase().indexOf(filterStr) > -1 ||
+        res.qte.toLowerCase().indexOf(filterStr) > -1
+        
+        
+        )
   }
 
   const handlealert = () => {
@@ -257,9 +249,9 @@ export default function Article() {
             inputProps={{ 'aria-label': 'Rechercher' }}
             onChange={ (e)=>
               {
-                search(e)
-            /*   setfilter(e.target.value)
-              console.log("the name",filterStr) */
+                
+               setfilter(e.target.value)
+              console.log("the name",filterStr) 
             }} 
           />
           <IconButton
@@ -274,7 +266,7 @@ export default function Article() {
       <Card className={clases.card}>
         {isloaded && (
           <DataGrid
-            rows={rows2}
+            rows={search()}
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[8]}

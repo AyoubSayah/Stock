@@ -51,16 +51,18 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
-  palylist :{
-position:'absolute',
-width:'2rem'
-  }
+  palylist: {
+    position: 'absolute',
+    width: '2rem',
+  },
 }));
 
 export default function Articleapp() {
-  const [rows, setrow] = React.useState([]);
-  const [isloaded, setisloaded] = React.useState(false);
+  const [rows, setrow] = useState([]);
+  const [isloaded, setisloaded] = useState(false);
   const [_id, setid] = useState('');
+  const [libelle, setlibelle] = useState('');
+  const [listearticle, setlistearticle] = useState([]);
   const columns = [
     {
       field: 'id',
@@ -127,14 +129,18 @@ export default function Articleapp() {
           size='small'
           style={{ marginLeft: 16 }}
           onClick={() => {
-            handleOpen(params.getValue(params.id, '_id'));
+            handleOpen(
+              params.getValue(params.id, '_id'),
+              params.getValue(params.id, 'libelle'),
+              params.getValue(params.id, 'id')
+            );
           }}
         />
       ),
     },
   ];
   const { id } = useParams();
-
+  const [code_article, setcodearticle] = useState('');
   useEffect(() => {
     fetch();
   }, [id]);
@@ -146,19 +152,28 @@ export default function Articleapp() {
   };
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (data) => {
+  const handleOpen = (data, lib, cd) => {
     setOpen(true);
     setid(data);
+    setlibelle(lib);
+    setcodearticle(cd);
   };
   const [open2, setOpen2] = useState(false);
 
   const handleOpen2 = () => {
     setOpen2(true);
-  
   };
 
   const handleClose = () => {
     setOpen(false);
+    setOpen2(false);
+  };
+  const ajoutliste = (data) => {
+    const liste = listearticle;
+    liste.push(data);
+    console.log(liste.indexOf(data.code_article));
+    setlistearticle(liste);
+    console.log(liste);
   };
   return (
     <div>
@@ -185,25 +200,23 @@ export default function Articleapp() {
         >
           <CircularProgress color='primary' />
         </div>
-        
       )}
-      <PlaylistAddCheckIcon  
-      style={{
-        position:'absolute',
-        color:'#fff',
-        width:'2.5rem',
-        height:'2.5rem',
-        cursor:'pointer',
-        background:'#626ed4',
-        padding:'.5rem',
-        borderRadius:'4rem',
-        bottom:"5%",
-        right:'5%' 
-
-      }}
-      onClick={() => {
-        handleOpen2();
-      }}
+      <PlaylistAddCheckIcon
+        style={{
+          position: 'absolute',
+          color: '#fff',
+          width: '2.3rem',
+          height: '2.3rem',
+          cursor: 'pointer',
+          background: '#626ed4',
+          padding: '.3rem',
+          borderRadius: '4rem',
+          bottom: '5%',
+          right: '5%',
+        }}
+        onClick={() => {
+          handleOpen2();
+        }}
       />
       <Modal
         open={open}
@@ -211,23 +224,22 @@ export default function Articleapp() {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Quantite id_article={_id} id_fournisseur={id} />
+        <Quantite
+          id_article={_id}
+          id_fournisseur={id}
+          libelle={libelle}
+          code_article={code_article}
+          ajoutliste={ajoutliste}
+        />
       </Modal>
-   {/*    <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
-      >
-        <Quantite id_article={_id} id_fournisseur={id} />
-      </Modal> */}
+
       <Modal
         open={open2}
         onClose={handleClose}
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Listeartcle/>
+        <Listeartcle listearticle={listearticle} />
       </Modal>
     </div>
   );

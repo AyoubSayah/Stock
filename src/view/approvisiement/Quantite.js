@@ -15,7 +15,7 @@ const useStyle = makeStyles((theme) => ({
     width: '300px',
     padding: '1rem 2rem',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: ' center',
     flexDirection: 'column',
   },
   button: {
@@ -33,12 +33,14 @@ export default function Quantite(props) {
     if (qt > 0) {
       const data = {
         id_article: props.id_article,
-        id_fournisseur: props.id_fournisseur,
+        // id_fournisseur: props.id_fournisseur,
+        code_article: props.code_article,
         quantite: qt,
-        date_commande: Date.now(),
+        libelle: props.libelle,
       };
-      const res = await apis.ajoutcommande(data);
-      console.log(res);
+      props.ajoutliste(data);
+      // const res = await apis.ajoutcommande(data);
+      // console.log(res);
     }
   };
   return (

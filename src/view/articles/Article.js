@@ -81,6 +81,7 @@ export default function Article() {
   const [rows2, setrow2] = React.useState([]);
   const [isloaded, setisloaded] = React.useState(false);
   const [Search, setsearch] = React.useState(false);
+  const [filterStr,setfilter]= React.useState('')
   const apis2 = apis;
   const clases = useStyles();
   useEffect(() => {
@@ -111,12 +112,12 @@ export default function Article() {
       setrow2(rows)
     }else{
       const liste = rows.filter((res) => {
-        console.log(res.libelle)
-        return res.libelle===(e.target.value);
-     
+ 
+        return res.libellee===(e.target.value);
+       
       });
       setrow2(liste)
-      console.log(rows)
+    
   console.log("the liste is",liste)
     }
   
@@ -254,9 +255,12 @@ export default function Article() {
             className={clases.input}
             placeholder='Rechercher'
             inputProps={{ 'aria-label': 'Rechercher' }}
-            onChange={(e) => {
-              search(e, '');
-            }}
+            onChange={ (e)=>
+              {
+                search(e)
+            /*   setfilter(e.target.value)
+              console.log("the name",filterStr) */
+            }} 
           />
           <IconButton
             type='submit'

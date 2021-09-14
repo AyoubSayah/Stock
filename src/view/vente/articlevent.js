@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import * as apis from '../fournisseur/service.fournisseur';
+import * as apis from '../articles/service.article'
 import { useParams } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
-import Quantite from './Quantite';
+
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import Listeartcle from './listarticle';
+import  Listeartcle from './lisearticle'
+import Quantite from './Quantite';
+    
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -57,7 +59,7 @@ width:'2rem'
   }
 }));
 
-export default function Articleapp() {
+export default function Articlevente() {
   const [rows, setrow] = React.useState([]);
   const [isloaded, setisloaded] = React.useState(false);
   const [_id, setid] = useState('');
@@ -139,9 +141,10 @@ export default function Articleapp() {
     fetch();
   }, [id]);
   const fetch = () => {
-    apis.getarticles(id).then((res) => {
+    apis.getallarticle().then((res) => {
       setrow(res);
       setisloaded(true);
+      console.log("come now")
     });
   };
   const [open, setOpen] = useState(false);
@@ -205,7 +208,7 @@ export default function Articleapp() {
         handleOpen2();
       }}
       />
-      <Modal
+   <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='simple-modal-title'
@@ -213,14 +216,6 @@ export default function Articleapp() {
       >
         <Quantite id_article={_id} id_fournisseur={id} />
       </Modal>
-   {/*    <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='simple-modal-title'
-        aria-describedby='simple-modal-description'
-      >
-        <Quantite id_article={_id} id_fournisseur={id} />
-      </Modal> */}
       <Modal
         open={open2}
         onClose={handleClose}

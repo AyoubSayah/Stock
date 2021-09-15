@@ -42,6 +42,7 @@ export default function Quantite(props) {
       // const res = await apis.ajoutcommande(data);
       // console.log(res);
     }
+    props.handleclose()
   };
   return (
     <div className={clases.principale}>
@@ -63,6 +64,7 @@ export default function Quantite(props) {
           color='primary'
           className={clases.button}
           onClick={handlesubmit}
+        
         >
           Confirmer
         </Button>

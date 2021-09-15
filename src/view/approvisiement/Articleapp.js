@@ -230,6 +230,7 @@ export default function Articleapp() {
           libelle={libelle}
           code_article={code_article}
           ajoutliste={ajoutliste}
+          handleclose={handleClose}
         />
       </Modal>
 

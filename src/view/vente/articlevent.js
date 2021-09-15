@@ -63,6 +63,8 @@ export default function Articlevente() {
   const [rows, setrow] = React.useState([]);
   const [isloaded, setisloaded] = React.useState(false);
   const [_id, setid] = useState('');
+  const [libelle, setlibelle] = useState('');
+  const [listearticle, setlistearticle] = useState([]);
   const columns = [
     {
       field: 'id',
@@ -129,14 +131,19 @@ export default function Articlevente() {
           size='small'
           style={{ marginLeft: 16 }}
           onClick={() => {
-            handleOpen(params.getValue(params.id, '_id'));
+            handleOpen(
+              params.getValue(params.id, '_id'),
+              params.getValue(params.id, 'libelle'),
+              params.getValue(params.id, 'id')
+            );
           }}
         />
       ),
     },
   ];
   const { id } = useParams();
-
+  
+  const [code_article, setcodearticle] = useState('');
   useEffect(() => {
     fetch();
   }, [id]);
@@ -149,9 +156,11 @@ export default function Articlevente() {
   };
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (data) => {
+  const handleOpen = (data, lib, cd) => {
     setOpen(true);
     setid(data);
+    setlibelle(lib);
+    setcodearticle(cd);
   };
   const [open2, setOpen2] = useState(false);
 
@@ -162,6 +171,14 @@ export default function Articlevente() {
 
   const handleClose = () => {
     setOpen(false);
+    setOpen2(false);
+  };
+  const ajoutliste = (data) => {
+    const liste = listearticle;
+    liste.push(data);
+    console.log(liste.indexOf(data.code_article));
+    setlistearticle(liste);
+    console.log(liste);
   };
   return (
     <div>
@@ -214,7 +231,14 @@ export default function Articlevente() {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Quantite id_article={_id} id_fournisseur={id} />
+        <Quantite 
+          id_article={_id}
+          id_fournisseur={id}
+          libelle={libelle}
+          code_article={code_article}
+          ajoutliste={ajoutliste}
+          handleclose={handleClose}
+        />
       </Modal>
       <Modal
         open={open2}
@@ -222,7 +246,7 @@ export default function Articlevente() {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Listeartcle/>
+        <Listeartcle listearticle={listearticle}/>
       </Modal>
     </div>
   );

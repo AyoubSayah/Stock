@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-// import * as apis from './appro.service';
+import * as apis from './vente.service'
 
 const useStyle = makeStyles((theme) => ({
   principale: {},
@@ -15,7 +15,7 @@ const useStyle = makeStyles((theme) => ({
     width: '300px',
     padding: '1rem 2rem',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: ' center',
     flexDirection: 'column',
   },
   button: {
@@ -30,16 +30,19 @@ export default function Quantite(props) {
     setqt(e.target.value);
   };
   const handlesubmit = async () => {
-  /*   if (qt > 0) {
+    if (qt > 0) {
       const data = {
         id_article: props.id_article,
-        id_fournisseur: props.id_fournisseur,
+        // id_fournisseur: props.id_fournisseur,
+        code_article: props.code_article,
         quantite: qt,
-        date_commande: Date.now(),
+        libelle: props.libelle,
       };
-      const res = await apis.ajoutcommande(data);
-      console.log(res);
-    } */
+      props.ajoutliste(data);
+      // const res = await apis.ajoutcommande(data);
+      // console.log(res);
+    }
+    props.handleclose()
   };
   return (
     <div className={clases.principale}>
@@ -61,6 +64,7 @@ export default function Quantite(props) {
           color='primary'
           className={clases.button}
           onClick={handlesubmit}
+        
         >
           Confirmer
         </Button>
